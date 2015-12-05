@@ -1809,8 +1809,10 @@ again:
 	retry = console_seq != log_next_seq;
 	raw_spin_unlock_irqrestore(&logbuf_lock, flags);
 
-	if (retry && console_trylock())
+	if (retry && console_trylock()) {
+		retry = 0;
 		goto again;
+	}
 
 	if (wake_klogd)
 		wake_up_klogd();

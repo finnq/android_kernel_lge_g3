@@ -79,6 +79,10 @@
 #include <asm/smp.h>
 #endif
 
+#ifdef CONFIG_LGE_PM
+#include <linux/qpnp/power-on.h>
+#endif
+
 static int kernel_init(void *);
 
 extern void init_IRQ(void);
@@ -888,7 +892,6 @@ static int __init kernel_init(void * unused)
 	 * we're essentially up and running. Get rid of the
 	 * initmem segments and start the user-mode stuff..
 	 */
-
 	init_post();
 	return 0;
 }
