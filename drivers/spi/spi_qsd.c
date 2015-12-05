@@ -2210,7 +2210,7 @@ static int msm_spi_transfer_one_message(struct spi_master *master,
 	spin_unlock_irqrestore(&dd->queue_lock, flags);
 
 	if (status_error)
-			dd->cur_msg->status = -EIO;
+		dd->cur_msg->status = -EIO;
 	else
 		msm_spi_process_message(dd);
 

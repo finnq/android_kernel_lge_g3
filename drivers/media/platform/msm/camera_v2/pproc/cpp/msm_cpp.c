@@ -57,6 +57,7 @@
 #define MSM_CPP_TURBO_CLOCK 320000000
 
 #define CPP_FW_VERSION_1_2_0	0x10020000
+#define CPP_FW_VERSION_1_2_1    0x10020001		// LGE_CHANGE, for use cpp firmware v1.2.1, 2014-10-08, jeeho.hyun@lge.com
 #define CPP_FW_VERSION_1_4_0	0x10040000
 #define CPP_FW_VERSION_1_6_0	0x10060000
 #define CPP_FW_VERSION_1_8_0	0x10080000
@@ -1673,6 +1674,18 @@ long msm_cpp_subdev_ioctl(struct v4l2_subdev *sd,
 		kfree(k_stream_buff_info.buffer_info);
 		kfree(u_stream_buff_info);
 		if (cpp_dev->stream_cnt == 0) {
+			/* LGE_CHANGES_S Camera Preview ab / ib bandwith patch from QCT, hyunuk.park@lge.com*/
+			#if 0
+			rc = msm_isp_update_bandwidth(ISP_CPP, 981345600,
+				1066680000);
+			if (rc < 0) {
+				pr_err("Bandwidth Set Failed!\n");
+				msm_isp_update_bandwidth(ISP_CPP, 0, 0);
+				mutex_unlock(&cpp_dev->mutex);
+				return -EINVAL;
+			}
+			#endif
+			/* LGE_CHANGES_E Camera Preview ab / ib bandwith patch from QCT, hyunuk.park@lge.com*/
 			cpp_dev->state = CPP_STATE_ACTIVE;
 			msm_cpp_clear_timer(cpp_dev);
 			msm_cpp_clean_queue(cpp_dev);
