@@ -32,6 +32,4 @@ int q6audio_is_digital_pcm_interface(u16 port_id);
 
 int q6audio_get_port_id(u16 port_id);
 
-int q6audio_get_port_id_from_index(u16 port_idx);
-
 #endif
